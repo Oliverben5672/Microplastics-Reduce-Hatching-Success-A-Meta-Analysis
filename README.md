@@ -1,4 +1,4 @@
-# Microplastic effects on aquatic species hatching success — phylogenetic meta-analysis
+# Microplastics Reduce Hatching Success in Oviparous Taxa: A Meta-Analysis
 
 Data and R code accompanying:
 
