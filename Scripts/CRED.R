@@ -5,10 +5,6 @@ library(readr)
 CRED_FINAL <- read_csv("Data/CRED_FINAL.csv")
 View(CRED_FINAL)
 
-library(tidyverse)
-library(janitor)
-library(metafor)
-
 # 1. Clean names, drop empty Excel rows, tidy text -------------------------
 dat <- CRED_FINAL %>%
   clean_names() %>%
@@ -117,7 +113,9 @@ dat <- dat %>%
   )
 
 # 6. Phylogeny and shared-control IDs ---------------------------------------
-library(rotl); library(ape); library(phytools)   # load after cleaning: ape masks dplyr::where
+library(rotl) 
+library(ape)
+library(phytools)   # load after cleaning: ape masks dplyr::where
 
 species_list <- sort(unique(dat$species))
 taxa <- tnrs_match_names(species_list, context_name = "Animals")
@@ -158,21 +156,172 @@ dat_dose_cred <- dat_dose %>% filter(cred_r != "R3")
 stopifnot(all(c("control_id", "species_phylo", "conc_mg_L") %in% names(dat_cred)))
 
 # 8. Model function and the three base CRED models --------------------------
-fit_cred <- function(data, struct = c("simple","taxonomic","phylo"), mods = ~ 1, rho = 0.5) {
+fit_cred <- function(data, struct = c("simple","phylo"), mods = ~ 1, rho = 0.5, method = "REML") {
   struct <- match.arg(struct)
   V <- vcalc(vi, cluster = control_id, obs = es_id, rho = rho, data = data)
   random <- list(~ 1 | study_id, ~ 1 | es_id)
-  if (struct != "simple") random <- c(random, list(~ 1 | species))
-  if (struct == "phylo")  random <- c(random, list(~ 1 | species_phylo))
+  if (struct == "phylo") random <- c(random, list(~ 1 | species_phylo))
   rma.mv(yi, V, mods = mods, random = random,
          R = if (struct == "phylo") list(species_phylo = phylo_cor),
-         data = data, method = "REML", test = "t")
+         data = data, method = method, test = "t")
 }
 
+# Class support: >= 3 STUDIES
+class_support <- dat_cred %>% group_by(taxa_class) %>%
+  summarise(k_es = n(), k_studies = n_distinct(study_id), .groups = "drop")
+print(class_support)
+dat_tax <- dat_cred %>% filter(taxa_class %in% class_support$taxa_class[class_support$k_studies >= 3])
+
 m_simple <- fit_cred(dat_cred, "simple")
-m_tax    <- fit_cred(dat_cred, "taxonomic")
 m_phylo  <- fit_cred(dat_cred, "phylo")
 
-AIC(m_simple, m_tax, m_phylo)
-anova(m_simple, m_tax)
-anova(m_tax, m_phylo)
+m_tax0     <- fit_cred(dat_tax, "simple")                          # same rows, no class
+m_tax      <- fit_cred(dat_tax, "simple", mods = ~ 0 + taxa_class) # class-specific means
+m_tax_omni <- fit_cred(dat_tax, "simple", mods = ~ taxa_class)     # QM: do classes differ?
+
+AIC(m_simple, m_phylo)
+anova(m_simple, m_phylo)
+m_tax_omni
+
+# 1. Are the variance components identifiable? (a clear peak = yes, flat = no)
+profile(m_phylo)
+
+# 2. Phylogenetic signal, as in the old paper
+mean_es <- dat_cred %>% group_by(species_phylo) %>% summarise(m = mean(yi)) %>% deframe()
+tr <- keep.tip(tree, names(mean_es)); mean_es <- mean_es[tr$tip.label]
+phylosig(tr, mean_es, method = "lambda", test = TRUE)
+phylosig(tr, mean_es, method = "K", test = TRUE, nsim = 1000)
+
+# 3. Sensitivity of the overall effect to rho
+purrr::map_dfr(c(0.2, 0.5, 0.8), \(r) {
+  m <- fit_cred(dat_cred, "simple", rho = r)
+  tibble(rho = r, est = as.numeric(coef(m)), ci_lb = m$ci.lb, ci_ub = m$ci.ub,
+         s2_study = m$sigma2[1], s2_es = m$sigma2[2])
+})
+
+# 4. Robust SEs, clustered on study
+robust(m_simple, cluster = dat_cred$study_id)
+
+# 5. Influence: leave one study out
+purrr::map_dfr(unique(dat_cred$study_id), \(s) {
+  m <- fit_cred(filter(dat_cred, study_id != s), "simple")
+  tibble(dropped = s, est = as.numeric(coef(m)), ci_lb = m$ci.lb, ci_ub = m$ci.ub)
+}) %>% arrange(est)
+
+# Descriptive summary for the classes that can't be tested
+dat_cred %>%
+  filter(!taxa_class %in% c("Actinopterygii","Crustacea")) %>%
+  group_by(taxa_class) %>%
+  summarise(k_es = n(), k_studies = n_distinct(study_id),
+            mean_g = mean(yi), min_g = min(yi), max_g = max(yi))
+
+
+#9 single moderators -------------------------------------------------
+dat_dose_cred <- dat_dose_cred %>% mutate(log_conc = log10(conc_mg_L))
+
+fit_mod <- function(var, data, struct = "simple", min_k = 3, continuous = FALSE) {
+  d <- data %>% filter(!is.na(.data[[var]]))
+  
+  if (!continuous) {
+    ok <- d %>% group_by(lvl = as.character(.data[[var]])) %>%
+      summarise(ks = n_distinct(study_id), .groups = "drop") %>%
+      filter(ks >= min_k) %>% pull(lvl)
+    d <- d %>% filter(as.character(.data[[var]]) %in% ok)
+    d[[var]] <- droplevels(if (is.factor(d[[var]])) d[[var]] else factor(d[[var]]))
+  }
+  
+  m_om <- fit_cred(d, struct, mods = as.formula(paste("~", var)))   # intercept + contrasts: omnibus test
+  omni <- tibble(moderator = var, struct = struct, k_es = m_om$k,
+                 k_studies = n_distinct(d$study_id),
+                 QM = as.numeric(m_om$QM), df1 = m_om$QMdf[1], df2 = m_om$QMdf[2],
+                 p = m_om$QMp)
+  
+  if (continuous) {
+    lev <- tibble(moderator = var, struct = struct, level = "slope per unit",
+                  k_es = m_om$k, k_studies = n_distinct(d$study_id),
+                  g = as.numeric(coef(m_om)[2]), ci_lb = m_om$ci.lb[2], ci_ub = m_om$ci.ub[2])
+  } else {
+    m_lv <- fit_cred(d, struct, mods = as.formula(paste("~ 0 +", var)))   # level-specific means
+    n_tab <- d %>% group_by(level = as.character(.data[[var]])) %>%
+      summarise(k_es = n(), k_studies = n_distinct(study_id), .groups = "drop")
+    lev <- tibble(moderator = var, struct = struct,
+                  level = sub(paste0("^", var), "", rownames(m_lv$beta)),
+                  g = as.numeric(m_lv$beta), ci_lb = m_lv$ci.lb, ci_ub = m_lv$ci.ub) %>%
+      left_join(n_tab, by = "level")
+  }
+  list(omnibus = omni, levels = lev)
+}
+
+data_list <- list(dat_cred = dat_cred, dat_dose_cred = dat_dose_cred)
+
+specs <- tribble(
+  ~var,             ~dset,           ~continuous,
+  "taxa_class",     "dat_cred",      FALSE,
+  "polymer_test",   "dat_cred",      FALSE,
+  "contam",         "dat_cred",      FALSE,
+  "env_relevant",   "dat_cred",      FALSE,
+  "lifestage_test", "dat_cred",      FALSE,
+  "route_test",     "dat_cred",      FALSE,
+  "size_bin",       "dat_cred",      FALSE,
+  "log_size",       "dat_cred",      TRUE,
+  "log_conc",       "dat_dose_cred", TRUE      # aqueous only, mg/L
+)
+
+grid <- tidyr::crossing(specs, struct = c("simple", "phylo_sp", "phylo"))
+safe_fit <- purrr::possibly(fit_mod, otherwise = NULL)
+
+results <- purrr::pmap(grid, \(var, dset, continuous, struct)
+                       safe_fit(var, data_list[[dset]], struct, continuous = continuous))
+
+grid[purrr::map_lgl(results, is.null), ]          # any model that failed to fit
+
+omnibus    <- purrr::map_dfr(results, "omnibus")  %>% group_by(struct) %>%
+  mutate(p_holm = p.adjust(p, "holm")) %>% ungroup()
+levels_tbl <- purrr::map_dfr(results, "levels")
+
+omnibus %>% arrange(moderator, struct) %>% mutate(across(c(QM, p, p_holm), ~ round(.x, 3)))
+levels_tbl %>% filter(struct == "simple") %>% mutate(across(c(g, ci_lb, ci_ub), ~ round(.x, 2)))
+
+library(clubSandwich)
+chk <- function(var, data) {
+  d <- data %>% filter(!is.na(.data[[var]]))
+  m <- fit_cred(d, "simple", mods = as.formula(paste("~", var)))
+  anova(robust(m, cluster = d$study_id, clubSandwich = TRUE), btt = 2:length(coef(m)))
+}
+chk("contam", dat_cred); chk("env_relevant", dat_cred)
+chk("lifestage_test", dat_cred); chk("log_conc", dat_dose_cred)
+
+purrr::map_dfr(unique(dat_dose_cred$study_id), \(s) {
+  m <- fit_cred(filter(dat_dose_cred, study_id != s), "simple", mods = ~ log_conc)
+  tibble(dropped = s, slope = as.numeric(coef(m)[2]), p = m$pval[2])
+}) %>% arrange(desc(p))
+
+with(dat_cred, table(contam, env_relevant))
+with(dat_cred, table(lifestage_test, contam, useNA = "ifany"))
+dat_dose_cred %>% group_by(env_relevant) %>%
+  summarise(k_studies = n_distinct(study_id), med = median(conc_mg_L), min = min(conc_mg_L), max = max(conc_mg_L))
+dat_cred %>% group_by(contam) %>%
+  summarise(k_studies = n_distinct(study_id), prop_env_yes = mean(env_relevant == "Yes"))
+
+
+dat_tax <- dat_tax %>% mutate(log_conc = log10(conc_mg_L))
+
+# A. Overall estimates for every structure
+ov <- function(m, label, d) tibble(model = label, k_es = m$k, k_studies = n_distinct(d$study_id),
+                                   g = as.numeric(coef(m)), ci_lb = m$ci.lb, ci_ub = m$ci.ub, p = m$pval)
+bind_rows(ov(m_simple, "simple", dat_cred), ov(m_phylo, "phylo", dat_cred),
+          ov(m_phylo_sp, "phylo + species", dat_cred), ov(m_tax0, "taxa subset (no class)", dat_tax)) %>%
+  mutate(across(c(g, ci_lb, ci_ub), ~ round(.x, 2)), p = signif(p, 2))
+
+# B. Taxa-adjusted moderator models (class + moderator), with robust p
+adj <- function(var, data = dat_tax) {
+  d <- data %>% filter(!is.na(.data[[var]])) %>% droplevels()
+  m <- fit_cred(d, "simple", mods = as.formula(paste("~ taxa_class +", var)))
+  idx <- grep(paste0("^", var), rownames(m$beta))
+  rb <- robust(m, cluster = d$study_id, clubSandwich = TRUE)
+  tibble(moderator = var, model = "taxa + moderator", k_es = m$k, k_studies = n_distinct(d$study_id),
+         p_model = anova(m, btt = idx)$QMp, p_robust = anova(rb, btt = idx)$QMp)
+}
+mods <- c("polymer_test","contam","env_relevant","lifestage_test","route_test","size_bin","log_size","log_conc")
+purrr::map_dfr(mods, purrr::possibly(adj, otherwise = NULL)) %>%
+  mutate(across(starts_with("p_"), ~ round(.x, 3)))
