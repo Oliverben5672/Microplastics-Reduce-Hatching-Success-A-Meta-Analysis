@@ -1,0 +1,10 @@
+moderator,Primary lnRR,R3 lnRR,PlotDigitiser lnRR,Secondary lnRR,Primary g,R3 g,PlotDigitiser g,Secondary g
+taxa_class,0.768,0.735,NE (df<4),0.800,0.886,0.761,0.829,0.800
+polymer_test,NE (df<4),NE (df<4),NE (df<4),NE (df<4),NE (df<4),NE (df<4),NE (df<4),NE (df<4)
+env_relevant,0.750,0.719,NE (df<4),0.777,NE (df<4),NE (df<4),NE (df<4),NE (df<4)
+lifestage_test,0.302,0.197,0.569,0.246,0.124,0.101,0.927,0.133
+route_test,0.131,0.334,NE (df<4),0.110,0.075,NE (df<4),0.302,0.053
+size_bin,NE (df<4),NE (df<4),0.663,NE (df<4),NE (df<4),NE (df<4),0.847,NE (df<4)
+log_size,0.422,0.446,NE (df<4),0.450,0.042,0.042,NE (df<4),0.049
+log_conc,NE (df<4),NE (df<4),NE (df<4),NE (df<4),NE (df<4),NE (df<4),NE (df<4),NE (df<4)
+contam,NA,NA,NA,0.024,NA,NA,NA,0.007

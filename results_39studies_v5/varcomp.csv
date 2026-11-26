@@ -1,0 +1,81 @@
+scale,model,term,sigma2,resid
+lnRR,Primary: simple,study_id,0.065,common
+lnRR,Primary: simple,es_id,0.004,common
+lnRR,Primary: species,study_id,0.065,common
+lnRR,Primary: species,es_id,0.004,common
+lnRR,Primary: species,species,0,common
+lnRR,Primary: phylo,study_id,0.065,common
+lnRR,Primary: phylo,es_id,0.004,common
+lnRR,Primary: phylo,species_phylo,0,common
+lnRR,Primary: phylo + species,study_id,0.065,common
+lnRR,Primary: phylo + species,es_id,0.004,common
+lnRR,Primary: phylo + species,species,0,common
+lnRR,Primary: phylo + species,species_phylo,0,common
+lnRR,Secondary: simple,study_id,0.065,by_contam
+lnRR,Secondary: simple,es_id: Pure plastic,0.004,by_contam
+lnRR,Secondary: simple,es_id: Co-contaminant,1.213,by_contam
+lnRR,Secondary: species,study_id,0.065,by_contam
+lnRR,Secondary: species,species,0,by_contam
+lnRR,Secondary: species,es_id: Pure plastic,0.004,by_contam
+lnRR,Secondary: species,es_id: Co-contaminant,1.213,by_contam
+lnRR,Secondary: phylo,study_id,0.064,by_contam
+lnRR,Secondary: phylo,species_phylo,0,by_contam
+lnRR,Secondary: phylo,es_id: Pure plastic,0.004,by_contam
+lnRR,Secondary: phylo,es_id: Co-contaminant,1.213,by_contam
+lnRR,Secondary: phylo + species,study_id,0.065,by_contam
+lnRR,Secondary: phylo + species,species,0,by_contam
+lnRR,Secondary: phylo + species,species_phylo,0,by_contam
+lnRR,Secondary: phylo + species,es_id: Pure plastic,0.004,by_contam
+lnRR,Secondary: phylo + species,es_id: Co-contaminant,1.213,by_contam
+lnRR,Secondary (common residual variance): simple,study_id,0.099,common
+lnRR,Secondary (common residual variance): simple,es_id,0.161,common
+lnRR,Secondary (common residual variance): species,study_id,0,common
+lnRR,Secondary (common residual variance): species,es_id,0.152,common
+lnRR,Secondary (common residual variance): species,species,0.161,common
+lnRR,Secondary (common residual variance): phylo,study_id,0.099,common
+lnRR,Secondary (common residual variance): phylo,es_id,0.161,common
+lnRR,Secondary (common residual variance): phylo,species_phylo,0,common
+lnRR,Secondary (common residual variance): phylo + species,study_id,0,common
+lnRR,Secondary (common residual variance): phylo + species,es_id,0.152,common
+lnRR,Secondary (common residual variance): phylo + species,species,0.161,common
+lnRR,Secondary (common residual variance): phylo + species,species_phylo,0,common
+Hedges' g,Primary: simple,study_id,1.374,common
+Hedges' g,Primary: simple,es_id,0,common
+Hedges' g,Primary: species,study_id,1.374,common
+Hedges' g,Primary: species,es_id,0,common
+Hedges' g,Primary: species,species,0,common
+Hedges' g,Primary: phylo,study_id,1.374,common
+Hedges' g,Primary: phylo,es_id,0,common
+Hedges' g,Primary: phylo,species_phylo,0,common
+Hedges' g,Primary: phylo + species,study_id,1.374,common
+Hedges' g,Primary: phylo + species,es_id,0,common
+Hedges' g,Primary: phylo + species,species,0,common
+Hedges' g,Primary: phylo + species,species_phylo,0,common
+Hedges' g,Secondary: simple,study_id,1.111,by_contam
+Hedges' g,Secondary: simple,es_id: Pure plastic,0,by_contam
+Hedges' g,Secondary: simple,es_id: Co-contaminant,4.192,by_contam
+Hedges' g,Secondary: species,study_id,1.077,by_contam
+Hedges' g,Secondary: species,species,0.035,by_contam
+Hedges' g,Secondary: species,es_id: Pure plastic,0,by_contam
+Hedges' g,Secondary: species,es_id: Co-contaminant,4.163,by_contam
+Hedges' g,Secondary: phylo,study_id,1.111,by_contam
+Hedges' g,Secondary: phylo,species_phylo,0,by_contam
+Hedges' g,Secondary: phylo,es_id: Pure plastic,0,by_contam
+Hedges' g,Secondary: phylo,es_id: Co-contaminant,4.192,by_contam
+Hedges' g,Secondary: phylo + species,study_id,1.111,by_contam
+Hedges' g,Secondary: phylo + species,species,0.001,by_contam
+Hedges' g,Secondary: phylo + species,species_phylo,0,by_contam
+Hedges' g,Secondary: phylo + species,es_id: Pure plastic,0,by_contam
+Hedges' g,Secondary: phylo + species,es_id: Co-contaminant,4.192,by_contam
+Hedges' g,Secondary (common residual variance): simple,study_id,0.932,common
+Hedges' g,Secondary (common residual variance): simple,es_id,0,common
+Hedges' g,Secondary (common residual variance): species,study_id,0.804,common
+Hedges' g,Secondary (common residual variance): species,es_id,0,common
+Hedges' g,Secondary (common residual variance): species,species,0.132,common
+Hedges' g,Secondary (common residual variance): phylo,study_id,0.932,common
+Hedges' g,Secondary (common residual variance): phylo,es_id,0,common
+Hedges' g,Secondary (common residual variance): phylo,species_phylo,0,common
+Hedges' g,Secondary (common residual variance): phylo + species,study_id,0.804,common
+Hedges' g,Secondary (common residual variance): phylo + species,es_id,0,common
+Hedges' g,Secondary (common residual variance): phylo + species,species,0.132,common
+Hedges' g,Secondary (common residual variance): phylo + species,species_phylo,0,common

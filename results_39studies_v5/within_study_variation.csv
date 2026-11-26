@@ -1,0 +1,16 @@
+moderator,studies_varying,studies,dataset
+polymer_test,4,32,Primary
+env_relevant,8,32,Primary
+lifestage_test,0,32,Primary
+route_test,0,32,Primary
+size_bin,2,32,Primary
+log_size,8,32,Primary
+log_conc,13,24,Primary
+polymer_test,4,34,Secondary
+env_relevant,9,34,Secondary
+lifestage_test,0,34,Secondary
+route_test,0,34,Secondary
+size_bin,2,34,Secondary
+log_size,8,34,Secondary
+contam,14,34,Secondary
+log_conc,14,26,Secondary

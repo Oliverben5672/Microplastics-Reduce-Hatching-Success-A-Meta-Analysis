@@ -1,0 +1,2 @@
+reference,records,control_groups,classes,species,polymers,contam,routes,lifestages,units,conc_mg_L,source,med_treat_reps,med_ctrl_reps,share_sd_imputed,g_min,g_max,prop_negative,med_vi
+Prata et al. 2022,28,1,Actinopterygii,Danio rerio,PS/PP,Pure plastic,Water,Embryonic,mg/L/ug/L,9e-05 to 100,PlotDigitiser,10,20,1,-0.8936495288579829,0.5755741669475147,0.7142857142857143,0.15096682283419888

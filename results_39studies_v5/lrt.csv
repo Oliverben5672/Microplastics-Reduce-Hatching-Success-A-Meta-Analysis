@@ -1,0 +1,17 @@
+dataset,scale,comparison,LRT,p
+Primary,lnRR,simple vs species,0,1
+Primary,lnRR,simple vs phylo,0.0018725115060078679,0.9654842917809368
+Primary,lnRR,species vs phylo + species (phylogeny given species),0.0018717543387225533,0.9654912665051598
+Primary,lnRR,phylo vs phylo + species (species given phylogeny),0,1
+Secondary,lnRR,simple vs species,0,1
+Secondary,lnRR,simple vs phylo,0.0016316613936737667,0.9677791502527984
+Secondary,lnRR,species vs phylo + species (phylogeny given species),1.017632342836805e-7,0.9997454720352348
+Secondary,lnRR,phylo vs phylo + species (species given phylogeny),0,1
+Primary,Hedges' g,simple vs species,7.329617801588029e-9,0.999931690559913
+Primary,Hedges' g,simple vs phylo,0,1
+Primary,Hedges' g,species vs phylo + species (phylogeny given species),0,1
+Primary,Hedges' g,phylo vs phylo + species (species given phylogeny),1.9907133719243575e-9,0.9999644004565642
+Secondary,Hedges' g,simple vs species,0.00836485673818288,0.9271274135355659
+Secondary,Hedges' g,simple vs phylo,0,1
+Secondary,Hedges' g,species vs phylo + species (phylogeny given species),0,1
+Secondary,Hedges' g,phylo vs phylo + species (species given phylogeny),9.835513037614874e-5,0.9920871769937183

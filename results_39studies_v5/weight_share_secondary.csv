@@ -1,0 +1,5 @@
+contam,records,med_vi,weight_share,scale
+Pure plastic,102,0.006770452842933796,0.98,lnRR
+Co-contaminant,32,0.003891322903327047,0.02,lnRR
+Pure plastic,102,0.666872502726528,0.944,Hedges' g
+Co-contaminant,32,2.170437126307123,0.056,Hedges' g

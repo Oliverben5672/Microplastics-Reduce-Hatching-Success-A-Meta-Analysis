@@ -1,0 +1,4 @@
+study_id,reference,arms,arms_dropped,study_lost
+2,Jakubowska et al. 2020,3,3,TRUE
+28,Gupta et al. 2023,2,2,TRUE
+39,Wang & Liu 2024,6,4,FALSE

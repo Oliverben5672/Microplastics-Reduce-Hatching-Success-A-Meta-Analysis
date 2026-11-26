@@ -1,0 +1,21 @@
+scale,model,resid,k_es,k_studies,est,ci_lb,ci_ub,p_model
+lnRR,Primary: simple,common,102,32,-0.141,-0.235,-0.048,0.0035
+lnRR,Primary: species,common,102,32,-0.141,-0.235,-0.048,0.0035
+lnRR,Primary: phylo,common,102,32,-0.143,-0.24,-0.045,0.0047
+lnRR,Primary: phylo + species,common,102,32,-0.143,-0.24,-0.045,0.0047
+lnRR,Primary: taxa subset (no class),common,92,28,-0.133,-0.233,-0.032,0.01
+lnRR,Secondary: simple,by_contam,134,34,-0.147,-0.24,-0.054,0.0022
+lnRR,Secondary: species,by_contam,134,34,-0.147,-0.24,-0.054,0.0022
+lnRR,Secondary: phylo,by_contam,134,34,-0.148,-0.245,-0.051,0.003
+lnRR,Secondary: phylo + species,by_contam,134,34,-0.147,-0.24,-0.054,0.0022
+lnRR,Secondary: taxa subset (no class),by_contam,123,30,-0.139,-0.238,-0.039,0.0069
+Hedges' g,Primary: simple,common,102,32,-0.838,-1.331,-0.346,0.001
+Hedges' g,Primary: species,common,102,32,-0.838,-1.331,-0.346,0.001
+Hedges' g,Primary: phylo,common,102,32,-0.838,-1.331,-0.346,0.001
+Hedges' g,Primary: phylo + species,common,102,32,-0.838,-1.331,-0.346,0.001
+Hedges' g,Primary: taxa subset (no class),common,92,28,-0.819,-1.386,-0.253,0.005
+Hedges' g,Secondary: simple,by_contam,134,34,-0.794,-1.241,-0.347,6e-4
+Hedges' g,Secondary: species,by_contam,134,34,-0.796,-1.252,-0.34,7.5e-4
+Hedges' g,Secondary: phylo,by_contam,134,34,-0.794,-1.241,-0.347,6e-4
+Hedges' g,Secondary: phylo + species,by_contam,134,34,-0.794,-1.241,-0.347,6e-4
+Hedges' g,Secondary: taxa subset (no class),by_contam,123,30,-0.701,-1.151,-0.251,0.0025

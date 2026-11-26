@@ -1,0 +1,6 @@
+step,records,studies
+Records extracted,150,39
+After excluding arms with < 2 replicates,141,37
+After removing CRED R3 records,134,34
+Primary: pure plastic only,102,32
+Co-contaminant records (secondary analysis only),32,16

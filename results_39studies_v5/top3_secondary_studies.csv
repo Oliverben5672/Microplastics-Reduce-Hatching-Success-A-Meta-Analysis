@@ -1,0 +1,6 @@
+study_id,reference,contam,taxa_class,data_source,n
+11,Kumari et al. 2023,Pure plastic,Mollusca,Author Correspondance,2
+11,Kumari et al. 2023,Pure plastic,Mollusca,PlotDigitiser,1
+13,Chibwe et al. 2021,Co-contaminant,Actinopterygii,PlotDigitiser,1
+17,Shi et al. 2024,Pure plastic,Actinopterygii,PlotDigitiser,1
+17,Shi et al. 2024,Co-contaminant,Actinopterygii,PlotDigitiser,3

@@ -1,0 +1,17 @@
+scale,dataset,model,resid,df,AIC
+lnRR,Primary,simple,common,3,-58.42295359989835
+lnRR,Primary,species,common,4,-56.4229535948144
+lnRR,Primary,phylo,common,4,-56.42482611140436
+lnRR,Primary,phylo + species,common,5,-54.424825349153124
+lnRR,Secondary,simple,by_contam,4,42.59764329779138
+lnRR,Secondary,species,by_contam,5,44.59764330099661
+lnRR,Secondary,phylo,by_contam,5,44.596011636397705
+lnRR,Secondary,phylo + species,by_contam,6,46.597643199233374
+Hedges' g,Primary,simple,common,3,285.5065188939685
+Hedges' g,Primary,species,common,4,287.5065188866389
+Hedges' g,Primary,phylo,common,4,287.5065188990255
+Hedges' g,Primary,phylo + species,common,5,289.50651889703477
+Hedges' g,Secondary,simple,by_contam,4,505.4142641844253
+Hedges' g,Secondary,species,by_contam,5,507.4058993276871
+Hedges' g,Secondary,phylo,by_contam,5,507.4142641909938
+Hedges' g,Secondary,phylo + species,by_contam,6,509.4141658358634

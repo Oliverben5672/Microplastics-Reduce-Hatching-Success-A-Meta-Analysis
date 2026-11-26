@@ -1,0 +1,30 @@
+scale,moderator,model,k_es,k_studies,p_model,df2,p_robust,dataset
+lnRR,polymer_test,taxa + moderator,84,25,0.74222269330917,1.015211134899321,NA,Primary
+lnRR,env_relevant,taxa + moderator,92,28,0.4795327528047305,6.727755955622746,0.6312542201077496,Primary
+lnRR,lifestage_test,taxa + moderator,91,28,0.008629488514601153,8.04568867962049,0.09177709791409343,Primary
+lnRR,route_test,taxa + moderator,88,27,0.230882961931314,3.6208245998795325,NA,Primary
+lnRR,size_bin,taxa + moderator,92,28,0.10320436214028744,2.1440779078286467,NA,Primary
+lnRR,log_size,taxa + moderator,92,28,0.3747986550486283,7.357722584240055,0.21791292155466915,Primary
+lnRR,log_conc,taxa + moderator,70,22,0.15055543386057538,2.488101730804268,NA,Primary
+Hedges' g,polymer_test,taxa + moderator,84,25,0.4875958455750429,0.9248081815323776,NA,Primary
+Hedges' g,env_relevant,taxa + moderator,92,28,0.13134743832779963,1.4018077482705535,NA,Primary
+Hedges' g,lifestage_test,taxa + moderator,91,28,6.269122155000644e-4,8.811196559452052,0.049379842776562176,Primary
+Hedges' g,route_test,taxa + moderator,88,27,0.4253388975992093,3.76191239403041,NA,Primary
+Hedges' g,size_bin,taxa + moderator,92,28,0.41659510883320844,1.3172871926258898,NA,Primary
+Hedges' g,log_size,taxa + moderator,92,28,0.11875649312113074,3.437729204721857,NA,Primary
+Hedges' g,log_conc,taxa + moderator,70,22,0.023887918416344956,1.0697202032535411,NA,Primary
+lnRR,polymer_test,taxa + moderator,107,26,0.7482600587877276,1.0262028215091004,NA,Secondary
+lnRR,env_relevant,taxa + moderator,123,30,0.5120297576062597,6.757649580749162,0.6562065556041035,Secondary
+lnRR,lifestage_test,taxa + moderator,122,30,0.005863017135545172,8.286814214408874,0.07579755810287805,Secondary
+lnRR,route_test,taxa + moderator,119,29,0.19260285637868121,3.905357909046444,NA,Secondary
+lnRR,size_bin,taxa + moderator,123,30,0.10640641029548786,2.155645716081752,NA,Secondary
+lnRR,log_size,taxa + moderator,123,30,0.39864005774046885,7.398214001001722,0.2350198537150438,Secondary
+lnRR,log_conc,taxa + moderator,99,24,0.18136217102172184,2.494439977761593,NA,Secondary
+lnRR,contam,taxa + moderator,123,30,0.004189317442648335,11.760644198220403,0.02675029448225814,Secondary
+Hedges' g,polymer_test,taxa + moderator,107,26,0.391102124013693,1.2082761659899188,NA,Secondary
+Hedges' g,lifestage_test,taxa + moderator,122,30,3.139894828679752e-4,9.998257545767856,0.07311847552542511,Secondary
+Hedges' g,route_test,taxa + moderator,119,29,0.3803066187697203,5.065869896810406,0.2613959973781819,Secondary
+Hedges' g,size_bin,taxa + moderator,123,30,0.422724987091897,1.3514851872734592,NA,Secondary
+Hedges' g,log_size,taxa + moderator,123,30,0.1613375515646696,4.6475446199679755,0.08608347180965495,Secondary
+Hedges' g,log_conc,taxa + moderator,99,24,0.03003467441075198,1.0796322354727925,NA,Secondary
+Hedges' g,contam,taxa + moderator,123,30,4.005798398904477e-4,9.345152683642528,0.013082646512103158,Secondary
